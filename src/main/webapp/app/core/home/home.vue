@@ -4,8 +4,10 @@
             <span class="hipster img-fluid rounded"></span>
         </div>
         <div class="col-md-9">
-            <h1 class="display-4" v-text="$t('home.title')">Welcome, Java Hipster!</h1>
+            <h1 class="display-4" v-text="$t('home.title')">Farmdiagnostics</h1>
             <p class="lead" v-text="$t('home.subtitle')">This is your homepage</p>
+
+            hallo
 
             <div>
                 <div class="alert alert-success" v-if="authenticated">
@@ -22,6 +24,7 @@
                 </div>
             </div>
 
+<!--
             <p v-text="$t('home.question')">
                 If you have any question on JHipster:
             </p>
@@ -33,7 +36,7 @@
                 <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener" v-text="$t('home.link.chat')">JHipster public chat room</a></li>
                 <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener" v-text="$t('home.link.follow')">follow @java_hipster on Twitter</a></li>
             </ul>
-
+-->
             <p>
                 <span v-text="$t('home.like')">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener" v-text="$t('home.github')">GitHub</a>!
             </p>
