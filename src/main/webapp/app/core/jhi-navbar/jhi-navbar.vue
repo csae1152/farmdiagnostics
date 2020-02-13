@@ -5,9 +5,8 @@
                 <font-awesome-icon icon="bars" />
             </b-navbar-toggle>
             <b-navbar-brand class="logo float-left" b-link to="/">
-                <span class="logo-img"></span>
-                <span v-text="$t('global.title')" class="navbar-title">jhipster</span> <span class="navbar-version">{{version}}</span>
-            </b-navbar-brand>
+             
+                <span v-text="$t('global.title')" class="navbar-title">jhipster</span></b-navbar-brand>
         </div>
         <b-collapse is-nav id="header-tabs">
             <b-navbar-nav class="ml-auto">
@@ -145,7 +144,7 @@
 }
 
 .jh-navbar {
-  background-color: #353d47;
+  background-color: #39b840;
   padding: 0.2em 1em;
 }
 

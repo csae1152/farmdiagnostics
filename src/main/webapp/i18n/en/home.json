@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Farmdiagnostics",
-    "subtitle": "This is your homepage",
+    "subtitle": "Welcome, i'm Agricol your personal assistent!",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
