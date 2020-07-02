@@ -5,7 +5,7 @@
             <router-link :to="{name: 'BankAccountMySuffixCreate'}" tag="button" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bank-account-my-suffix">
                 <font-awesome-icon icon="plus"></font-awesome-icon>
                 <span  v-text="$t('jhipsterApp.testRootBankAccount.home.createLabel')">
-                    Create a new Bank Account
+                    Create new retinal analysis
                 </span>
             </router-link>
         </h2>
@@ -25,19 +25,9 @@
                 <thead>
                 <tr>
                     <th><span v-text="$t('global.field.id')">ID</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.name')">Name</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.bankNumber')">Bank Number</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.agencyNumber')">Agency Number</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.lastOperationDuration')">Last Operation Duration</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.meanOperationDuration')">Mean Operation Duration</span></th>
+                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.name')">Name</span></th>                   
                     <th><span v-text="$t('jhipsterApp.testRootBankAccount.balance')">Balance</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.openingDay')">Opening Day</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.lastOperationDate')">Last Operation Date</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.active')">Active</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.accountType')">Account Type</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.attachment')">Attachment</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.description')">Description</span></th>
-                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.user')">User</span></th>
+                    <th><span v-text="$t('jhipsterApp.testRootBankAccount.attachment')">Attachment</span></th>                   
                     <th></th>
                 </tr>
                 </thead>
@@ -47,24 +37,13 @@
                     <td>
                         <router-link :to="{name: 'BankAccountMySuffixView', params: {bankAccountId: bankAccount.id}}">{{bankAccount.id}}</router-link>
                     </td>
-                    <td>{{bankAccount.name}}</td>
-                    <td>{{bankAccount.bankNumber}}</td>
-                    <td>{{bankAccount.agencyNumber}}</td>
-                    <td>{{bankAccount.lastOperationDuration}}</td>
-                    <td>{{bankAccount.meanOperationDuration}}</td>
+                    <td>{{bankAccount.name}}</td>            
                     <td>{{bankAccount.balance}}</td>
-                    <td>{{bankAccount.openingDay}}</td>
-                    <td v-if="bankAccount.lastOperationDate"> {{$d(Date.parse(bankAccount.lastOperationDate), 'short') }}</td>
-                    <td>{{bankAccount.active}}</td>
-                    <td v-text="$t('jhipsterApp.BankAccountType.' + bankAccount.accountType)">{{bankAccount.accountType}}</td>
                     <td>
                         <a v-if="bankAccount.attachment" v-on:click="openFile(bankAccount.attachmentContentType, bankAccount.attachment)" v-text="$t('entity.action.open')">open</a>
                         <span v-if="bankAccount.attachment">{{bankAccount.attachmentContentType}}, {{byteSize(bankAccount.attachment)}}</span>
-                    </td>
-                    <td>{{bankAccount.description}}</td>
-                    <td>
-                        {{bankAccount.userLogin}}
-                    </td>
+                    </td>               
+                 
                     <td class="text-right">
                         <div class="btn-group">
                             <router-link :to="{name: 'BankAccountMySuffixView', params: {bankAccountId: bankAccount.id}}" tag="button" class="btn btn-info btn-sm details">
@@ -91,7 +70,7 @@
         <b-modal ref="removeEntity" id="removeEntity" >
             <span slot="modal-title"><span id="jhipsterApp.testRootBankAccount.delete.question" v-text="$t('entity.delete.title')">Confirm delete operation</span></span>
             <div class="modal-body">
-                <p id="jhi-delete-bankAccount-heading" v-text="$t('jhipsterApp.testRootBankAccount.delete.question', {'id': removeId})">Are you sure you want to delete this Bank Account?</p>
+                <p id="jhi-delete-bankAccount-heading" v-text="$t('jhipsterApp.testRootBankAccount.delete.question', {'id': removeId})">Are you sure you want to delete this Retinal analysis?</p>
             </div>
             <div slot="modal-footer">
                 <button type="button" class="btn btn-secondary" v-text="$t('entity.action.cancel')" v-on:click="closeDialog()">Cancel</button>

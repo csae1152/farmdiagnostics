@@ -32,7 +32,7 @@
     "enableTranslation": true,
     "clientPackageManager": "npm",
     "nativeLanguage": "en",
-    "languages": ["en", "fr"],
+    "languages": ["en", "fr", "de"],
     "clientFramework": "vue",
     "clientTheme": "none",
     "clientThemeVariant": "",

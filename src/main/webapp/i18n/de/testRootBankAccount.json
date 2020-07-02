@@ -2,7 +2,7 @@
   "jhipsterApp": {
     "testRootBankAccount": {
       "home": {
-        "title": "Bank Accounts",
+        "title": "Diagnostics Resource Center",
         "createLabel": "Create a new Bank Account",
         "createOrEditLabel": "Create or edit a Bank Account",
         "notFound": "No Bank Accounts found"

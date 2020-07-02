@@ -11,58 +11,10 @@
                         <span>{{bankAccount.name}}</span>
                     </dd>
                     <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.bankNumber')">Bank Number</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.bankNumber}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.agencyNumber')">Agency Number</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.agencyNumber}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.lastOperationDuration')">Last Operation Duration</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.lastOperationDuration}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.meanOperationDuration')">Mean Operation Duration</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.meanOperationDuration}}</span>
-                    </dd>
-                    <dt>
                         <span v-text="$t('jhipsterApp.testRootBankAccount.balance')">Balance</span>
                     </dt>
                     <dd>
                         <span>{{bankAccount.balance}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.openingDay')">Opening Day</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.openingDay}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.lastOperationDate')">Last Operation Date</span>
-                    </dt>
-                    <dd>
-                        <span v-if="bankAccount.lastOperationDate">{{$d(Date.parse(bankAccount.lastOperationDate), 'long') }}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.active')">Active</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.active}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.accountType')">Account Type</span>
-                    </dt>
-                    <dd>
-                        <span v-text="$t('jhipsterApp.BankAccountType.' + bankAccount.accountType)">{{bankAccount.accountType}}</span>
                     </dd>
                     <dt>
                         <span v-text="$t('jhipsterApp.testRootBankAccount.attachment')">Attachment</span>
@@ -72,19 +24,7 @@
                             <a v-on:click="openFile(bankAccount.attachmentContentType, bankAccount.attachment)" v-text="$t('entity.action.open')">open</a>
                             {{bankAccount.attachmentContentType}}, {{byteSize(bankAccount.attachment)}}
                         </div>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.description')">Description</span>
-                    </dt>
-                    <dd>
-                        <span>{{bankAccount.description}}</span>
-                    </dd>
-                    <dt>
-                        <span v-text="$t('jhipsterApp.testRootBankAccount.user')">User</span>
-                    </dt>
-                    <dd>
-                        {{bankAccount.userLogin}}
-                    </dd>
+                    </dd>                   
                 </dl>
                 <button type="submit"
                         v-on:click.prevent="previousState()"
