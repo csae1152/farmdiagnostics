@@ -4,7 +4,7 @@
       "home": {
         "title": "Diagnostics Resource Center",
         "createLabel": "New Retinal Image Analysis",
-        "createOrEditLabel": "Create or edit a Analysis",
+        "createOrEditLabel": "Create or edit an Analysis",
         "notFound": "No Resources found"
       },
       "created": "A new Retinal Image Analysis is created with identifier {{ param }}",

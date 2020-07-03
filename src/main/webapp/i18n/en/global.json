@@ -84,7 +84,7 @@
       }
     },
     "field": {
-      "id": "ID"
+      "id": "Number"
     },
     "ribbon": {
       "dev": "Development"
@@ -98,7 +98,7 @@
       "back": "Back",
       "cancel": "Cancel",
       "delete": "Delete",
-      "edit": "Edit",
+      "edit": "Analyse",
       "open": "Open",
       "save": "Save",
       "view": "View"

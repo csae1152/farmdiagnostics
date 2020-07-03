@@ -1,5 +1,6 @@
 package io.github.jhipster.sample.web.rest;
 
+import io.github.jhipster.sample.prediction.RetinaImageService;
 import io.github.jhipster.sample.service.BankAccountService;
 import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.sample.service.dto.BankAccountDTO;
@@ -13,8 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -118,6 +121,16 @@ public class BankAccountResource {
     public ResponseEntity<BankAccountDTO> getBankAccount(@PathVariable Long id) {
         log.debug("REST request to get BankAccount : {}", id);
         Optional<BankAccountDTO> bankAccountDTO = bankAccountService.findOne(id);
+        /**
+         * TODO start here with analysing
+         */
+        RetinaImageService retinaImageService = new RetinaImageService();
+        try {
+            MultipartFile retina = retinaImageService.convertFrombyteToFile(bankAccountDTO.get().getAttachment());
+            retinaImageService.convert(retina);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
     }
 
