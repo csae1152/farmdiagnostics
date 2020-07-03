@@ -3,8 +3,9 @@ package io.github.jhipster.sample.security;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * This exception is thrown in case of a not activated user trying to authenticate.
+ * This exception is thrown in case of a not activated user trying to authenticate with Token.
  */
+
 public class UserNotActivatedException extends AuthenticationException {
 
     private static final long serialVersionUID = 1L;
