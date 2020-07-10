@@ -1,6 +1,8 @@
 package io.github.jhipster.sample.web.rest;
 
 import io.github.jhipster.sample.prediction.RetinaImageService;
+import io.github.jhipster.sample.prediction.RetinalClassificationImpl;
+import io.github.jhipster.sample.prediction.RetinalPictureUtils;
 import io.github.jhipster.sample.service.BankAccountService;
 import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.sample.service.dto.BankAccountDTO;
@@ -124,13 +126,25 @@ public class BankAccountResource {
         /**
          * TODO start here with analysing
          */
-        RetinaImageService retinaImageService = new RetinaImageService();
+        RetinalClassificationImpl retinal = new RetinalClassificationImpl();
+               RetinaImageService retinaImageService = new RetinaImageService();
         try {
             MultipartFile retina = retinaImageService.convertFrombyteToFile(bankAccountDTO.get().getAttachment());
-            retinaImageService.convert(retina);
+            try {
+                retinal.init();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            RetinalPictureUtils retinalPictureUtils = new RetinalPictureUtils();
+            if(retinalPictureUtils.retinalclassifier(retina)) {
+                bankAccountDTO.get().setRetinaresult("Engine found something");
+            } else {
+                bankAccountDTO.get().setRetinaresult("Engine did not found something");
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+       }
+
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
     }
 

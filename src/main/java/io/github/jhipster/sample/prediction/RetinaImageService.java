@@ -63,7 +63,7 @@ public class RetinaImageService {
           * Setting up data
           */
          ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-         File mainPath = new File("/Users/aboullaite/Downloads/dataset");
+         File mainPath = new File("/Users/helmu/OneDrive/Documents/java/farmdiagnostics/dataset");
          FileSplit fileSplit = new FileSplit(mainPath, NativeImageLoader.ALLOWED_FORMATS, rng);
          int numExamples = Math.toIntExact(fileSplit.length());
          numLabels = fileSplit.getRootDir().listFiles(File::isDirectory).length; //This only works if your root is clean: only label subdirs.
@@ -186,8 +186,8 @@ public class RetinaImageService {
         return convFile;
     }
 
-    private void transform(MultipartFile imageFile) {
-        NativeImageLoader loader = new NativeImageLoader(40, 40, 3);
+    public void transform(MultipartFile imageFile) {
+        NativeImageLoader loader = new NativeImageLoader(40, 90, 4);
         INDArray image = null;
         try {
             image = loader.asMatrix(convert(imageFile));
@@ -196,6 +196,6 @@ public class RetinaImageService {
         }
         ImagePreProcessingScaler preProcessor = new ImagePreProcessingScaler(0, 1);
         preProcessor.transform(image);
-        INDArray output = model.output(image, false);
+        INDArray output = model.output(image, true);
     }
 }

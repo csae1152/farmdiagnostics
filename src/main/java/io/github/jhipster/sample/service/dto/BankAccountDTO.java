@@ -25,6 +25,8 @@ public class BankAccountDTO implements Serializable {
 
     private Float lastOperationDuration;
 
+    private String retinaresult;
+
     private Double meanOperationDuration;
 
     @NotNull
@@ -176,6 +178,14 @@ public class BankAccountDTO implements Serializable {
 
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public String getRetinaresult() {
+        return retinaresult;
+    }
+
+    public void setRetinaresult(String retinaresult) {
+        this.retinaresult = retinaresult;
     }
 
     @Override
