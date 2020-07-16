@@ -11,14 +11,30 @@ import io.github.jhipster.sample.service.BankAccountQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.datavec.api.records.reader.RecordReader;
+import org.datavec.image.loader.ImageLoader;
+import org.datavec.image.loader.NativeImageLoader;
+import org.datavec.image.recordreader.ImageRecordReader;
+import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.deeplearning4j.util.ModelSerializer;
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,6 +58,9 @@ public class BankAccountResource {
     private final BankAccountService bankAccountService;
 
     private final BankAccountQueryService bankAccountQueryService;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     public BankAccountResource(BankAccountService bankAccountService, BankAccountQueryService bankAccountQueryService) {
         this.bankAccountService = bankAccountService;
@@ -126,24 +145,27 @@ public class BankAccountResource {
         /**
          * TODO start here with analysing
          */
-        RetinalClassificationImpl retinal = new RetinalClassificationImpl();
-               RetinaImageService retinaImageService = new RetinaImageService();
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(bankAccountDTO.get().getAttachment());
+        Resource resource = resourceLoader.getResource("");
         try {
-            MultipartFile retina = retinaImageService.convertFrombyteToFile(bankAccountDTO.get().getAttachment());
-            try {
-                retinal.init();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            RetinalPictureUtils retinalPictureUtils = new RetinalPictureUtils();
-            if(retinalPictureUtils.retinalclassifier(retina)) {
-                bankAccountDTO.get().setRetinaresult("Engine found something");
+            File savedModel = resource.getFile();
+            MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(savedModel);
+            BufferedImage retina = ImageIO.read(bais);
+            NativeImageLoader loader = new NativeImageLoader(100,400, 3);
+            INDArray input = loader.asMatrix(retina);
+            ImagePreProcessingScaler pre = new ImagePreProcessingScaler(0,1);
+            pre.transform(input);
+            INDArray output = model.output(input, false);
+
+            if(output.getFloat(0) > 0.8) {
+                bankAccountDTO.get().setRetinaresult("true");
             } else {
-                bankAccountDTO.get().setRetinaresult("Engine did not found something");
+                bankAccountDTO.get().setRetinaresult("false");
             }
         } catch (IOException e) {
             e.printStackTrace();
-       }
+        }
 
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
     }

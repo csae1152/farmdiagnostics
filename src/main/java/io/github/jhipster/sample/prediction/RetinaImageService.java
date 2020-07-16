@@ -170,7 +170,7 @@ public class RetinaImageService {
         InputStream inputStream = new ByteArrayInputStream(input);
         MultipartFile file = null;
         try {
-            file = new MockMultipartFile("new file name", inputStream);
+            file = new MockMultipartFile("retina", inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }

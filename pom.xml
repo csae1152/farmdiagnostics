@@ -8,7 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Jhipster</name>
-
     <repositories>
         <!-- jhipster-needle-maven-repository -->
     </repositories>
@@ -22,7 +21,7 @@
     <properties>
         <!-- Build properties -->
         <maven.version>3.3.9</maven.version>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
         <node.version>v12.14.0</node.version>
         <npm.version>6.13.7</npm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -118,7 +117,6 @@
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
@@ -280,7 +278,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -301,6 +298,12 @@
             <version>${archunit-junit5.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>problem-spring-web</artifactId>
@@ -637,9 +640,7 @@
                         <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                         <driver>org.h2.Driver</driver>
                         <url>jdbc:h2:file:${project.build.directory}/h2db/db/jhipster</url>
-                        <defaultSchemaName></defaultSchemaName>
                         <username>jhipster</username>
-                        <password></password>
                         <referenceUrl>hibernate:spring:io.github.jhipster.sample.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
@@ -855,7 +856,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <mainClass>${start-class}</mainClass>
+                        <mainClass>io.github.jhipster.sample.JhipsterApp</mainClass>
                         <fork>true</fork>
                         <!--
                         Enable the line below to have remote debugging of your application on port 5005
