@@ -1,21 +1,13 @@
 package io.github.jhipster.sample.web.rest;
 
-import io.github.jhipster.sample.prediction.RetinaImageService;
-import io.github.jhipster.sample.prediction.RetinalClassificationImpl;
-import io.github.jhipster.sample.prediction.RetinalPictureUtils;
-import io.github.jhipster.sample.service.BankAccountService;
-import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
-import io.github.jhipster.sample.service.dto.BankAccountDTO;
-import io.github.jhipster.sample.service.dto.BankAccountCriteria;
 import io.github.jhipster.sample.service.BankAccountQueryService;
-
+import io.github.jhipster.sample.service.BankAccountService;
+import io.github.jhipster.sample.service.dto.BankAccountCriteria;
+import io.github.jhipster.sample.service.dto.BankAccountDTO;
+import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.datavec.api.records.reader.RecordReader;
-import org.datavec.image.loader.ImageLoader;
 import org.datavec.image.loader.NativeImageLoader;
-import org.datavec.image.recordreader.ImageRecordReader;
-import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -28,7 +20,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
@@ -152,13 +143,14 @@ public class BankAccountResource {
             File savedModel = resource.getFile();
             MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(savedModel);
             BufferedImage retina = ImageIO.read(bais);
-            NativeImageLoader loader = new NativeImageLoader(100,400, 3);
+            NativeImageLoader loader = new NativeImageLoader(4, 9, 3);
             INDArray input = loader.asMatrix(retina);
             ImagePreProcessingScaler pre = new ImagePreProcessingScaler(0,1);
             pre.transform(input);
+
             INDArray output = model.output(input, false);
 
-            if(output.getFloat(0) > 0.8) {
+            if (output.getFloat(0) > 0.9) {
                 bankAccountDTO.get().setRetinaresult("true");
             } else {
                 bankAccountDTO.get().setRetinaresult("false");
