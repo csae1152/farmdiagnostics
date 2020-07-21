@@ -1,5 +1,17 @@
 package io.github.jhipster.sample.web.rest;
 
+import ai.djl.Application;
+import ai.djl.MalformedModelException;
+import ai.djl.inference.Predictor;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
+import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.mxnet.zoo.MxModelZoo;
+import ai.djl.repository.zoo.Criteria;
+import ai.djl.repository.zoo.ModelNotFoundException;
+import ai.djl.repository.zoo.ZooModel;
+import ai.djl.training.util.ProgressBar;
+import ai.djl.translate.TranslateException;
 import io.github.jhipster.sample.service.BankAccountQueryService;
 import io.github.jhipster.sample.service.BankAccountService;
 import io.github.jhipster.sample.service.dto.BankAccountCriteria;
@@ -7,25 +19,17 @@ import io.github.jhipster.sample.service.dto.BankAccountDTO;
 import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.datavec.image.loader.NativeImageLoader;
-import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
-import org.deeplearning4j.util.ModelSerializer;
-import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -133,33 +137,35 @@ public class BankAccountResource {
     public ResponseEntity<BankAccountDTO> getBankAccount(@PathVariable Long id) {
         log.debug("REST request to get BankAccount : {}", id);
         Optional<BankAccountDTO> bankAccountDTO = bankAccountService.findOne(id);
-        /**
-         * TODO start here with analysing
-         */
 
         ByteArrayInputStream bais = new ByteArrayInputStream(bankAccountDTO.get().getAttachment());
-        Resource resource = resourceLoader.getResource("");
-        try {
-            File savedModel = resource.getFile();
-            MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(savedModel);
-            BufferedImage retina = ImageIO.read(bais);
-            NativeImageLoader loader = new NativeImageLoader(4, 9, 3);
-            INDArray input = loader.asMatrix(retina);
-            ImagePreProcessingScaler pre = new ImagePreProcessingScaler(0,1);
-            pre.transform(input);
 
-            INDArray output = model.output(input, false);
+        Criteria<BufferedImage, DetectedObjects> criteria =
+            Criteria.builder()
+                .optApplication(Application.CV.OBJECT_DETECTION)
+                .setTypes(BufferedImage.class, DetectedObjects.class)
+                .optFilter("layer", "50")
+                .optFilter("flavor", "v1")
+                .optFilter("dataset", "cifar10")
+                .build();
 
-            if (output.getFloat(0) > 0.9) {
-                bankAccountDTO.get().setRetinaresult("true");
-            } else {
-                bankAccountDTO.get().setRetinaresult("false");
+        try (ZooModel<Image, DetectedObjects> model = MxModelZoo.SSD.loadModel(new ProgressBar())) {
+            try (Predictor<Image, DetectedObjects> predictor = model.newPredictor()) {
+                Image input = ImageFactory.getInstance().fromInputStream(bais);
+                BufferedImage img = (BufferedImage) input;
+                DetectedObjects detection = predictor.predict(input);
+                bankAccountDTO.get().setDescription(detection.toString());
+                System.out.println(detection);
             }
-        } catch (IOException e) {
+        } catch (MalformedModelException e) {
+            e.printStackTrace();
+        } catch (ModelNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException | TranslateException e) {
             e.printStackTrace();
         }
-
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
+
     }
 
     /**
