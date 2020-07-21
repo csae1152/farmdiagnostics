@@ -1,16 +1,13 @@
 package io.github.jhipster.sample.web.rest;
 
-import ai.djl.Application;
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
+import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
-import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.mxnet.zoo.MxModelZoo;
-import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ZooModel;
-import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.TranslateException;
 import io.github.jhipster.sample.service.BankAccountQueryService;
 import io.github.jhipster.sample.service.BankAccountService;
@@ -28,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -139,23 +135,19 @@ public class BankAccountResource {
         Optional<BankAccountDTO> bankAccountDTO = bankAccountService.findOne(id);
 
         ByteArrayInputStream bais = new ByteArrayInputStream(bankAccountDTO.get().getAttachment());
-
-        Criteria<BufferedImage, DetectedObjects> criteria =
-            Criteria.builder()
-                .optApplication(Application.CV.OBJECT_DETECTION)
-                .setTypes(BufferedImage.class, DetectedObjects.class)
-                .optFilter("layer", "50")
-                .optFilter("flavor", "v1")
-                .optFilter("dataset", "cifar10")
-                .build();
-
-        try (ZooModel<Image, DetectedObjects> model = MxModelZoo.SSD.loadModel(new ProgressBar())) {
-            try (Predictor<Image, DetectedObjects> predictor = model.newPredictor()) {
+        /**
+         * load prediction model.
+         */
+        try (ZooModel<Image, Classifications> model = MxModelZoo.RESNET.loadModel()) {
+            try (Predictor<Image, Classifications> predictor = model.newPredictor()) {
                 Image input = ImageFactory.getInstance().fromInputStream(bais);
-                BufferedImage img = (BufferedImage) input;
-                DetectedObjects detection = predictor.predict(input);
-                bankAccountDTO.get().setDescription(detection.toString());
-                System.out.println(detection);
+                Classifications detection = predictor.predict(input);
+                var prob = detection.best().getProbability();
+                var result = "";
+                if (prob > 0.4) {
+                    result = detection.best().getClassName();
+                }
+                bankAccountDTO.get().setDescription(result);
             }
         } catch (MalformedModelException e) {
             e.printStackTrace();
