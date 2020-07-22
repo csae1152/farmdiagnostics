@@ -31,7 +31,6 @@ import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -165,18 +164,6 @@ public class RetinaImageService {
     private SubsamplingLayer maxPool(String name, int[] kernel) {
         return new SubsamplingLayer.Builder(kernel, new int[]{2,2}).name(name).build();
     }
-
-    public MultipartFile convertFrombyteToFile(byte[] input) {
-        InputStream inputStream = new ByteArrayInputStream(input);
-        MultipartFile file = null;
-        try {
-            file = new MockMultipartFile("retina", inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
-
     private File convert(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();

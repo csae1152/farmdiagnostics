@@ -144,7 +144,7 @@ public class BankAccountResource {
                 Classifications detection = predictor.predict(input);
                 var result = "";
                 result = detection.best().getClassName();
-                bankAccountDTO.get().setDescription(result);
+                 bankAccountDTO.get().setDescription(result);
             }
         } catch (MalformedModelException e) {
             e.printStackTrace();
