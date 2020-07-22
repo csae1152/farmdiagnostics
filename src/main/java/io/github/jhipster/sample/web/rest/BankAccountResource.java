@@ -142,11 +142,8 @@ public class BankAccountResource {
             try (Predictor<Image, Classifications> predictor = model.newPredictor()) {
                 Image input = ImageFactory.getInstance().fromInputStream(bais);
                 Classifications detection = predictor.predict(input);
-                var prob = detection.best().getProbability();
                 var result = "";
-                if (prob > 0.4) {
-                    result = detection.best().getClassName();
-                }
+                result = detection.best().getClassName();
                 bankAccountDTO.get().setDescription(result);
             }
         } catch (MalformedModelException e) {
