@@ -9,6 +9,16 @@
                         <input type="text" class="form-control" id="id" name="id"
                                v-model="bankAccount.id" readonly />
                     </div>
+                     <div class="form-group">
+                        <label class="form-control-label">Diseas</label>
+                        <input type="text" class="form-control" name="name" id="bank-account-my-suffix-name"
+                            :class="{'valid': !$v.bankAccount.description.$invalid, 'invalid': $v.bankAccount.description.$invalid }" v-model="$v.bankAccount.description.$model"  required/>
+                        <div v-if="$v.bankAccount.description.$anyDirty && $v.bankAccount.description.$invalid">
+                            <small class="form-text text-danger" v-if="!$v.bankAccount.description.required" v-text="$t('entity.validation.required')">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="form-control-label" v-text="$t('jhipsterApp.testRootBankAccount.name')" for="bank-account-my-suffix-name">Name</label>
                         <input type="text" class="form-control" name="name" id="bank-account-my-suffix-name"
