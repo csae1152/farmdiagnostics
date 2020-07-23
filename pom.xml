@@ -302,7 +302,7 @@
 <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-cpu -->
 <dependency>
     <groupId>ai.djl.pytorch</groupId>
-    <artifactId>pytorch-native-cpu</artifactId>
+    <artifactId>pytorch-native-auto</artifactId>
     <version>1.5.0</version>
 </dependency>       
         <dependency>
