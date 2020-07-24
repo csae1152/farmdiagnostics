@@ -230,24 +230,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-         <!-- https://mvnrepository.com/artifact/org.deeplearning4j/deeplearning4j-core -->
-        <dependency>
-            <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-core</artifactId>
-            <version>0.9.1</version>
-        </dependency>
+        </dependency>        
         <!-- https://mvnrepository.com/artifact/org.nd4j/nd4j-jackson -->
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-jackson</artifactId>
             <version>0.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-core</artifactId>
-            <version>0.9.1</version>
-        </dependency>
+        </dependency>        
         <!-- https://mvnrepository.com/artifact/ai.djl.mxnet/mxnet-model-zoo -->
         <dependency>
             <groupId>ai.djl.mxnet</groupId>
@@ -261,8 +250,6 @@
             <artifactId>jna</artifactId>
             <version>5.6.0</version>
         </dependency>
-
-
         <!-- https://mvnrepository.com/artifact/ai.djl.mxnet/mxnet-engine -->
         <dependency>
             <groupId>ai.djl.mxnet</groupId>

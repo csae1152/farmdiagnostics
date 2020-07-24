@@ -154,7 +154,6 @@ public class BankAccountResource {
             e.printStackTrace();
         }
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
-
     }
 
     /**
