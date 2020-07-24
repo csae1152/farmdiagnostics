@@ -230,13 +230,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>        
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.nd4j/nd4j-jackson -->
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-jackson</artifactId>
             <version>0.7.0</version>
-        </dependency>        
+        </dependency>
         <!-- https://mvnrepository.com/artifact/ai.djl.mxnet/mxnet-model-zoo -->
         <dependency>
             <groupId>ai.djl.mxnet</groupId>
@@ -274,24 +274,14 @@
             <artifactId>repository</artifactId>
             <version>0.4.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-model-zoo -->
-        <dependency>
-            <groupId>ai.djl.pytorch</groupId>
-            <artifactId>pytorch-model-zoo</artifactId>
-            <version>0.6.0</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/ai.djl.mxnet/mxnet-native-auto -->
         <dependency>
             <groupId>ai.djl.mxnet</groupId>
             <artifactId>mxnet-native-auto</artifactId>
             <version>1.6.0</version>
         </dependency>
-<!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-cpu -->
-<dependency>
-    <groupId>ai.djl.pytorch</groupId>
-    <artifactId>pytorch-native-auto</artifactId>
-    <version>1.5.0</version>
-</dependency>       
+
         <dependency>
             <groupId>ai.djl.mxnet</groupId>
             <artifactId>mxnet-model-zoo</artifactId>
