@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,9 +143,10 @@ public class BankAccountResource {
             try (Predictor<Image, Classifications> predictor = model.newPredictor()) {
                 Image input = ImageFactory.getInstance().fromInputStream(bais);
                 Classifications detection = predictor.predict(input);
-                var result = "";
-                result = detection.best().getClassName();
-                 bankAccountDTO.get().setDescription(result);
+                var result = detection.best().getClassName();
+                var substring = result.substring(0,9);
+                var print = result.replace(substring, "");
+                bankAccountDTO.get().setDescription(print);
             }
         } catch (MalformedModelException e) {
             e.printStackTrace();
@@ -155,6 +157,8 @@ public class BankAccountResource {
         }
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
     }
+
+
 
     /**
      * {@code DELETE  /bank-accounts/:id} : delete the "id" bankAccount.
