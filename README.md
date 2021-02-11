@@ -1,3 +1,3 @@
 Farmdiagnostics
 
-New retinal image analysing framework.
+New retinal image analysing framework for faster analysing.
