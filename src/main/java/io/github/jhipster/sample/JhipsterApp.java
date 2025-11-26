@@ -66,6 +66,10 @@ public class JhipsterApp {
         logApplicationStartup(env);
     }
 
+    public void getLogentries() {
+
+    }
+
     private static void logApplicationStartup(Environment env) {
         String protocol = "http";
         if (env.getProperty("server.ssl.key-store") != null) {
