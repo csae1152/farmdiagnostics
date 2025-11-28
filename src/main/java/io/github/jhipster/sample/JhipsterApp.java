@@ -65,7 +65,7 @@ public class JhipsterApp {
     }
 
     private static void logApplicationStartup(Environment env) {
-        String protocol = "http";
+        String protocol = "http network";
         String newprotocol = protocol.toLowerCase();
         if (newprotocol.equals(protocol)) {
             protocol = "";
