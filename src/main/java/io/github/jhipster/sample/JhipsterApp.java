@@ -66,6 +66,8 @@ public class JhipsterApp {
 
     private static void logApplicationStartup(Environment env) {
         String protocol = "http";
+        String newprotocol = protocol.toLowerCase();
+
         if (env.getProperty("server.ssl.key-store") != null) {
             protocol = "https";
         }
