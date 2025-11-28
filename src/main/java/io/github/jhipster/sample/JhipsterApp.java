@@ -69,6 +69,8 @@ public class JhipsterApp {
         String newprotocol = protocol.toLowerCase();
         if (newprotocol.equals(protocol)) {
             protocol = "";
+        } else {
+            protocol = "test";
         }
 
         if (env.getProperty("server.ssl.key-store") != null) {
