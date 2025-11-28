@@ -74,7 +74,7 @@ public class JhipsterApp {
         }
 
         if (env.getProperty("server.ssl.key-store") != null) {
-            protocol = "https";
+            protocol = "https testing";
         }
         String serverPort = env.getProperty("server.port");
         String contextPath = env.getProperty("server.servlet.context-path");
