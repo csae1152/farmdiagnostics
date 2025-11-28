@@ -70,7 +70,7 @@ public class JhipsterApp {
         if (newprotocol.equals(protocol)) {
             protocol = "";
         } else {
-            protocol = "test";
+            protocol = "test integration";
         }
 
         if (env.getProperty("server.ssl.key-store") != null) {
