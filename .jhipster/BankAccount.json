@@ -51,7 +51,7 @@
         },
         {
             "fieldName": "lastOperationDate",
-            "fieldType": "Instant"
+            "fieldType": "Instantest"
         },
         {
             "fieldName": "active",
