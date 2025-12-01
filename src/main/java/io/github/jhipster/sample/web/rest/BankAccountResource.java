@@ -1,22 +1,35 @@
 package io.github.jhipster.sample.web.rest;
 
-import io.github.jhipster.sample.service.BankAccountService;
-import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
-import io.github.jhipster.sample.service.dto.BankAccountDTO;
-import io.github.jhipster.sample.service.dto.BankAccountCriteria;
+import ai.djl.MalformedModelException;
+import ai.djl.inference.Predictor;
+import ai.djl.modality.Classifications;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
+import ai.djl.mxnet.zoo.MxModelZoo;
+import ai.djl.repository.zoo.ModelNotFoundException;
+import ai.djl.repository.zoo.ZooModel;
+import ai.djl.translate.TranslateException;
 import io.github.jhipster.sample.service.BankAccountQueryService;
-
+import io.github.jhipster.sample.service.BankAccountService;
+import io.github.jhipster.sample.service.dto.BankAccountCriteria;
+import io.github.jhipster.sample.service.dto.BankAccountDTO;
+import io.github.jhipster.sample.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +50,9 @@ public class BankAccountResource {
     private final BankAccountService bankAccountService;
 
     private final BankAccountQueryService bankAccountQueryService;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     public BankAccountResource(BankAccountService bankAccountService, BankAccountQueryService bankAccountQueryService) {
         this.bankAccountService = bankAccountService;
@@ -118,8 +134,31 @@ public class BankAccountResource {
     public ResponseEntity<BankAccountDTO> getBankAccount(@PathVariable Long id) {
         log.debug("REST request to get BankAccount : {}", id);
         Optional<BankAccountDTO> bankAccountDTO = bankAccountService.findOne(id);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(bankAccountDTO.get().getAttachment());
+        /**
+         * load prediction model.
+         */
+        try (ZooModel<Image, Classifications> model = MxModelZoo.RESNET.loadModel()) {
+            try (Predictor<Image, Classifications> predictor = model.newPredictor()) {
+                Image input = ImageFactory.getInstance().fromInputStream(bais);
+                Classifications detection = predictor.predict(input);
+                var result = detection.best().getClassName();
+                var substring = result.substring(0,9);
+                var print = result.replace(substring, "");
+                bankAccountDTO.get().setDescription(print);
+            }
+        } catch (MalformedModelException e) {
+            e.printStackTrace();
+        } catch (ModelNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException | TranslateException e) {
+            e.printStackTrace();
+        }
         return ResponseUtil.wrapOrNotFound(bankAccountDTO);
     }
+
+
 
     /**
      * {@code DELETE  /bank-accounts/:id} : delete the "id" bankAccount.

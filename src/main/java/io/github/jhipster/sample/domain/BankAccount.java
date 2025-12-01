@@ -63,6 +63,7 @@ public class BankAccount implements Serializable {
     @Column(name = "account_type")
     private BankAccountType accountType;
 
+    @NotNull
     @Lob
     @Column(name = "attachment")
     private byte[] attachment;
