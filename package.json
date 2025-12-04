@@ -36,8 +36,8 @@
     "@types/selenium-webdriver": "3.0.15",
     "@types/sinon": "7.0.12",
     "@types/vuelidate": "0.7.5",
-    "@vue/cli-plugin-typescript": "4.1.2",
-    "@vue/cli-service": "4.1.2",
+    "@vue/cli-plugin-typescript": "5.0.9",
+    "@vue/cli-service": "5.0.9",
     "@vue/test-utils": "1.0.0-beta.30",
     "autoprefixer": "9.4.9",
     "base-href-webpack-plugin": "2.0.0",
@@ -92,7 +92,7 @@
     "webpack": "4.29.5",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.2.1",
+    "webpack-dev-server": "5.2.2",
     "webpack-merge": "4.2.1"
   },
   "engines": {
