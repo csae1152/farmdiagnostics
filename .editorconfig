@@ -9,7 +9,7 @@ root = true
 # Change these settings to your own preference
 indent_style = space
 indent_size = 4
-max_line_length = 180
+max_line_length = 0
 
 # We recommend you to keep these unchanged
 end_of_line = lf
@@ -19,7 +19,7 @@ insert_final_newline = true
 
 [*.{ts,tsx,js,json,css,scss,sql,ejs}]
 indent_style = space
-indent_size = 2
+indent_size = 0
 
 [*.md]
 trim_trailing_whitespace = false
